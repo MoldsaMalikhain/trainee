@@ -69,6 +69,162 @@ findInMatrycks = (inputMatrycks) => {
 
     }
 }
+let result = [];
+
+textEditing = (inputText, inputRules) =>{
+    let step = 0;
+    let sliced;
+
+    for(let rulesStep = 0; rulesStep < inputRules.length; rulesStep++){
+        let textText = [inputText[rulesStep].join(' ')];
+        switch(inputRules[rulesStep]){
+            case 'LEFT':
+                console.log("LEFT");
+                slicedForLong = [];
+                sliced = textText[0].split('');
+                if(sliced.length > 16){
+                    sliced = separate(sliced);
+                    for(let loopStep = 0; loopStep < sliced.length; loopStep++){
+                        step = 16 - sliced[loopStep].length;
+                        slicedForLong.push(sliced[loopStep])
+                        for(let loop = 0; loop < step; loop++){
+                            slicedForLong.push(' ');
+                        }
+                        slicedForLong.push('*');
+                        slicedForLong.unshift('*');
+                        result.push(slicedForLong.join(''))
+                        slicedForLong = [];
+                    }
+                }else{
+                    step = 16 - sliced.length
+                    for(let loop = 0; loop < step; loop++){
+                        sliced.push(' ');
+                    }
+                    sliced.push('*');
+                    sliced.unshift('*');
+                    result.push(sliced.join(''));
+                }    
+
+                break;
+            case 'RIGHT':
+                console.log("RIGHT");
+                slicedForLong = []
+                sliced = textText[0].split('');
+                
+                if(sliced.length > 16){
+                    sliced = separate(sliced);
+                    for(let loopStep = 0; loopStep < sliced.length; loopStep++){
+                        step = 16 - sliced[loopStep].length;
+                        slicedForLong.push(sliced[loopStep])
+                        for(let loop = 0; loop < step; loop++){
+                            slicedForLong.unshift(' ');
+            
+                        }
+                        slicedForLong.push('*');
+                        slicedForLong.unshift('*');
+                        result.push(slicedForLong.join(''))
+                        slicedForLong = [];
+                    }
+                }else{
+                    step = 16 - sliced.length
+                    for(let loop = 0; loop < step; loop++){
+                        sliced.unshift(' ');
+                    }
+                    sliced.push('*');
+                    sliced.unshift('*');
+                    result.push(sliced.join(''));
+                } 
+                // result.push([right(textText[0])]);
+                break;
+            default:
+                console.log('Please enter editing rules')
+                break;
+        }
+    }
+    result.push('******************');
+    result.unshift('******************');
+    console.table(result);
+    
+    return result;
+}
+
+function separate(someText){
+    let tempResult = [];
+    let sliced = [];
+    let sepText = someText;
+    step = 16;
+    while(true){
+        if(sepText[step] == ' ') {
+            sliced = sepText.splice(step)
+            sliced.shift();
+            tempResult.push(sepText.join(''), sliced.join(''));
+            break;
+        }            
+        step--;
+    }
+    return tempResult;
+}
+
+// function left(someText){
+//     slicedForLong = [];
+//     let sliced = someText.split('');
+//     if(sliced.length > 16){
+//         sliced = separate(sliced);
+//         console.table(sliced)
+//         for(let loopStep = 0; loopStep < sliced.length; loopStep++){
+//             step = 16 - sliced[loopStep].length;
+//             slicedForLong.push(sliced[loopStep])
+//             for(let loop = 0; loop < step; loop++){
+//                 slicedForLong.push(' ');
+//             }
+//             console.table(sliced[loopStep])
+//             result.push(tslicedForLong.join(''))
+//             slicedForLong = [];
+//         }
+//     }else{
+//         step = 16 - sliced.length
+//         for(let loop = 0; loop < step; loop++){
+//             sliced.push(' ');
+//         }
+//         result.push(sliced.join(''));
+//     }    
+// }
+// function right(someText){
+//     slicedForLong = []
+//     let sliced = someText.split('');
+    
+//     if(sliced.length > 16){
+//         sliced = separate(sliced);
+//         console.table(sliced)
+//         for(let loopStep = 0; loopStep < sliced.length; loopStep++){
+//             step = 16 - sliced[loopStep].length;
+//             slicedForLong.push(sliced[loopStep])
+//             for(let loop = 0; loop < step; loop++){
+//                 slicedForLong.unshift(' ');
+
+//             }
+//             console.table(sliced[loopStep])
+//             result.push(slicedForLong.join(''))
+//             slicedForLong = [];
+//         }
+//     }else{
+//         step = 16 - sliced.length
+//         for(let loop = 0; loop < step; loop++){
+//             sliced.unshift(' ');
+//         }
+//         result.push(sliced.join(''));
+//     } 
+// }
+
+let text = [
+    ["Hello", "world"],
+    ["Brad", "came", "to", "dinner", "with", "us"],
+    ["He", "loves", "tacos"]
+];
+let rules = ["LEFT", "RIGHT", "LEFT"];
+
+textEditing(text, rules);
+
 // let input = [
 //     [1, 2, 3, 2, 7],
 //     [4, 5, 6, 8, 1],
